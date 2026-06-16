@@ -1,0 +1,13 @@
+{
+  "name": "benya-bot-respuestas",
+  "version": "1.0.0",
+  "description": "Bot de respuestas automaticas para preguntas de MercadoLibre (BENYA)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  }
+}
