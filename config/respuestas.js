@@ -1,96 +1,198 @@
-// =======================================================================
-//  TABLA DE RESPUESTAS AUTOMATICAS  (este es el archivo que vas a editar)
-// =======================================================================
-//
-//  Como funciona:
-//  - El bot lee cada pregunta, la pasa a minuscula y le saca los acentos.
-//  - Recorre las reglas DE ARRIBA HACIA ABAJO y usa la PRIMERA que matchee.
-//  - Una regla matchea si la pregunta CONTIENE alguna de sus "keywords".
-//  - Si ninguna regla matchea, responde con FALLBACK.
-//  - El bot NO inventa: solo puede mandar uno de estos textos tal cual.
-//
-//  Consejos:
-//  - Pone las reglas mas especificas arriba y las generales abajo.
-//  - Las keywords van sin acento y en minuscula (el bot ya normaliza).
-//  - El bot publica solo: una respuesta mal escrita sale tal cual.
-//  - Si una pregunta es delicada (precio especial, reclamo, etc.) conviene
-//    que caiga en el FALLBACK y la contestes vos a mano.
-// =======================================================================
-
-// OJO con el ORDEN: las reglas mas especificas van ARRIBA. Las keywords muy
-// genericas (ej "tenes", "hay") se evitan a proposito porque aparecen en
-// cualquier pregunta y harian matchear la regla equivocada.
 export const REGLAS = [
+  // ─── CHEVROLET INCOMPATIBLES CONFIRMADOS ──────────────────────────────────
   {
-    // Chevrolet / MyLink (va PRIMERA para no caer en compatibilidad/android)
-    keywords: ["chevrolet", "chevy", "my link", "mylink", "onix", "cruze", "tracker", "s10", "spin", "prisma", "cobalt", "joy", "agile"],
-    answer:
-      "¡Hola! ¿Cómo estás? Te cuento con total sinceridad: en los Chevrolet que usan el sistema MyLink a veces funciona perfecto y otras veces puede dar algún inconveniente, depende del modelo y de la versión del sistema. Si tu auto ya trae CarPlay o Android Auto original de fábrica y te funciona con el cable, hay muy buenas chances de que ande. Si querés, pasame el modelo y el año así te oriento mejor. ¡Cualquier cosa quedo a tu disposición!",
+    keywords: ["onix", "tracker", "prisma", "spin", "cobalt", "joy", "agile", "s10", "captiva"],
+    answer: "¡Hola! Lamentablemente los Chevrolet con sistema MyLink (Onix, Tracker, Prisma, Spin, Cobalt, Joy, Ágile, S10, Captiva) NO son compatibles con nuestros adaptadores. El sistema MyLink de Chevrolet no tiene CarPlay ni Android Auto de fábrica, por lo que el adaptador no va a funcionar. Si tenés otro auto o dudas sobre otro modelo, ¡consultanos sin problema! 😊"
   },
+
+  // ─── CHEVROLET GENÉRICO (Cruze puede funcionar) ────────────────────────────
   {
-    // Android Auto / CarPlay (va antes que stock y compatibilidad)
-    keywords: ["android auto", "android", "androide", "carplay", "car play"],
-    answer:
-      "¡Hola! ¿Qué tal? Sí, el adaptador es compatible tanto con CarPlay (iPhone) como con Android Auto. Lo único que se necesita es que tu auto ya traiga CarPlay o Android Auto original de fábrica (de los que funcionan con cable). El adaptador lo que hace es volverlo inalámbrico. ¡Cualquier duda quedo atento!",
+    keywords: ["chevrolet", "chevy", "my link", "mylink", "cruze"],
+    answer: "¡Hola! Depende del modelo y año. Los Chevrolet con sistema MyLink (Onix, Tracker, Prisma, etc.) NO son compatibles. El Cruze 2017 en adelante con CarPlay/Android Auto de fábrica SÍ es compatible. La regla general: si hoy conectás el celu con cable USB y te funciona CarPlay o Android Auto → el adaptador va a andar. ¿Cuál es tu modelo y año exacto?"
   },
+
+  // ─── USB-C / FICHA C ───────────────────────────────────────────────────────
   {
-    // Inalambrico / wireless
-    keywords: ["inalambrico", "wireless", "sin cable", "bluetooth"],
-    answer:
-      "¡Hola! ¿Cómo va? El adaptador convierte tu CarPlay o Android Auto con cable en inalámbrico: lo conectás una sola vez y después se vincula solo cada vez que subís al auto. Es muy cómodo. ¡Quedo atento a cualquier consulta!",
+    keywords: ["usb c", "usb-c", "tipo c", "tipo-c", "ficha c", "puerto c", "usbc", "conector c", "entrada c"],
+    answer: "¡Hola! Depende del producto que estés mirando:\n\n• Adaptador 4 en 1 (Q1AS-4) → SÍ tiene puerto USB-C nativo ✅\n• Mini CarPlay M21 → viene con adaptador USB-C incluido ✅\n• CarPlay Premium Q1J → solo USB-A, no tiene USB-C ❌\n• TBOX → solo USB-A ❌\n\n¿Cuál estás viendo? Así te confirmo si es el indicado para tu auto. 😊"
   },
+
+  // ─── YOUTUBE / NETFLIX / STREAMING ────────────────────────────────────────
   {
-    // Compatibilidad / sirve para mi auto
-    keywords: ["compatible", "compatibilidad", "sirve para", "anda en", "funciona en", "mi auto", "que modelo", "para autos", "por cable"],
-    answer:
-      "¡Hola! ¿Cómo estás? El adaptador funciona en cualquier auto que ya tenga CarPlay o Android Auto original de fábrica (los que andan con cable). Un tip para estar seguros: si conectás tu celular con cable y te aparece CarPlay o Android Auto en la pantalla, entonces el adaptador te va a funcionar perfecto. Si me pasás la marca, el modelo y el año, te lo confirmo con gusto. ¡Saludos!",
+    keywords: ["youtube", "netflix", "streaming", "ver videos", "ver pelis", "prime video", "disney", "video"],
+    answer: "¡Hola! Depende del modelo:\n\n• Adaptador 4 en 1 (Q1AS-4) → Sí, podés ver YouTube/Netflix replicando la pantalla del celular ✅\n• TBOX → Sí, tiene Android propio (sin necesitar el celu) ✅\n• CarPlay Premium Q1J / Mini M21 → No permiten ver YouTube/Netflix ❌\n\n¿Querés que te oriente en cuál se adapta mejor a lo que buscás?"
   },
+
+  // ─── MIRRORLINK / REPLICAR PANTALLA ────────────────────────────────────────
   {
-    // Instalacion / como se usa
-    keywords: ["instala", "instalacion", "se conecta", "como se usa", "configura", "enchufa"],
-    answer:
-      "¡Hola! ¿Qué tal? La instalación es muy sencilla: se conecta al puerto USB del auto y se vincula una sola vez. Viene con instructivo y, si te queda alguna duda, te vamos guiando sin problema. ¡Estamos para ayudarte!",
+    keywords: ["mirrorlink", "mirror link", "replicar", "espejo", "airplay", "screen mirror", "duplicar pantalla", "reflejar"],
+    answer: "¡Hola! Solo algunos modelos permiten replicar pantalla:\n\n• Adaptador 4 en 1 (Q1AS-4) → SÍ tiene MirrorLink y Airplay ✅\n• TBOX → SÍ, además tiene Android propio para usar sin celular ✅\n• CarPlay Q1J / Mini M21 → No incluyen MirrorLink ❌\n\n¿Cuál te interesa o en qué auto lo querés usar?"
   },
+
+  // ─── VER EN MOVIMIENTO ─────────────────────────────────────────────────────
   {
-    // Calidad / producto premium / original
-    keywords: ["original", "calidad", "premium", "trucho", "es bueno", "es de buena", "es de calidad", "chino"],
-    answer:
-      "¡Hola! ¿Cómo estás? Son productos premium, de muy buena calidad, y los testeamos siempre al terminar de fabricarse para asegurarnos de que lleguen funcionando perfecto. Comprás con total tranquilidad. ¡Cualquier consulta quedo a tu disposición!",
+    keywords: ["en movimiento", "mientras manejo", "andando", "manejando", "en marcha", "mientras circulo", "circulando"],
+    answer: "¡Hola! Sí, los adaptadores funcionan mientras manejás. CarPlay/Android Auto inalámbrico funciona todo el tiempo, incluyendo GPS, música y Waze/Google Maps mientras circulás. ¿Tenés alguna duda puntual del modelo?"
   },
+
+  // ─── ANDROID AUTO / CARPLAY GENERAL ────────────────────────────────────────
   {
-    // Envio / demoras / cuando llega
-    keywords: ["envio", "enviar", "llega", "demora", "cuanto tarda", "correo", "despacho", "mandan"],
-    answer:
-      "¡Hola! ¿Cómo estás? Hacemos el envío por MercadoEnvíos. Apenas se acredita el pago lo despachamos, y el tiempo de entrega te lo muestra la misma publicación según tu domicilio. ¡Cualquier cosa quedo a tu disposición!",
+    keywords: ["android auto", "carplay", "car play", "android"],
+    answer: "¡Hola! Todos nuestros adaptadores convierten tu CarPlay o Android Auto con cable en INALÁMBRICO. Requisito: tu auto ya debe tener CarPlay o Android Auto funcionando con cable de fábrica. Si conectás el celu con USB hoy y funciona → el adaptador va a andar perfectamente. ¿Querés saber más sobre algún modelo en particular?"
   },
+
+  // ─── WHATSAPP / MENSAJES / LLAMADAS ────────────────────────────────────────
   {
-    // Garantia (menciona premium / testeado)
-    keywords: ["garantia", "falla", "anda mal", "defecto"],
-    answer:
-      "¡Hola! ¿Qué tal? Sí, el producto tiene garantía. Son productos premium y los testeamos siempre al terminar de fabricarse, así que comprás con tranquilidad. Ante cualquier inconveniente nos escribís y te lo resolvemos enseguida. ¡Saludos!",
+    keywords: ["whatsapp", "mensajes", "notificacion", "sms", "llamadas", "llamar", "wsp"],
+    answer: "¡Hola! Sí, al usar CarPlay o Android Auto inalámbrico seguís teniendo todas las funciones de siempre: WhatsApp, llamadas, notificaciones, música, GPS, todo igual que con cable pero sin el cable. 😊"
   },
+
+  // ─── WIFI / INTERNET ───────────────────────────────────────────────────────
   {
-    // Factura (solo C, NO A)
-    keywords: ["factura a", "factura", "responsable inscripto", "iva"],
-    answer:
-      "¡Hola! ¿Cómo estás? Sí, emitimos factura C. Por el momento no hacemos factura A. Al finalizar la compra cargás tus datos y te generamos la factura C sin problema. ¡Cualquier duda quedo atento!",
+    keywords: ["wifi", "wi-fi", "internet", "datos", "señal", "conexion", "conectar"],
+    answer: "¡Hola! Los adaptadores se conectan al celular por WiFi y Bluetooth (tecnología de Apple/Google). No necesitan internet propio, usan los datos de tu celular igual que siempre. La conexión es automática cada vez que subís al auto."
   },
+
+  // ─── VELOCIDAD / DEMORA DE CONEXIÓN ────────────────────────────────────────
   {
-    // Disponibilidad / stock (va ULTIMA: keywords precisas para no pisar a las otras)
-    keywords: ["stock", "disponible", "disponibilidad", "quedan", "hay unidades", "ultima unidad"],
-    answer:
-      "¡Hola! ¿Qué tal? Sí, tenemos stock disponible con entrega inmediata. Podés comprar con total tranquilidad. ¡Quedo atento por si necesitás algo más!",
+    keywords: ["tarda", "cuanto demora", "tiempo de conexion", "rapido", "lento", "lag", "delay", "demora conectar"],
+    answer: "¡Hola! La primera vez el emparejamiento tarda unos 30-60 segundos. Después, cada vez que subís al auto la conexión es automática en 5-10 segundos. Es mucho más cómodo que conectar el cable cada vez. 😊"
+  },
+
+  // ─── PANTALLA COMPLETA ─────────────────────────────────────────────────────
+  {
+    keywords: ["pantalla completa", "toda la pantalla", "ocupa toda", "resolucion", "calidad imagen"],
+    answer: "¡Hola! Sí, ocupa toda la pantalla de tu auto igual que con cable. La calidad de imagen y audio es idéntica al uso con cable. No hay diferencia visual."
+  },
+
+  // ─── TOYOTA ────────────────────────────────────────────────────────────────
+  {
+    keywords: ["toyota", "corolla", "hilux", "sw4", "yaris", "camry", "rav4", "fortuner", "rush", "prado"],
+    answer: "¡Hola! Toyota es compatible, siempre que el auto tenga CarPlay o Android Auto de fábrica funcionando con cable. Por ejemplo: Corolla XEI, Hilux con sistema multimedia, etc. La regla: si hoy enchufás el celu con USB y funciona CarPlay/Android Auto → el adaptador va a funcionar. ¿Cuál es tu modelo y año?"
+  },
+
+  // ─── PEUGEOT ───────────────────────────────────────────────────────────────
+  {
+    keywords: ["peugeot", "208", "308", "2008", "3008", "5008", "partner", "expert"],
+    answer: "¡Hola! Peugeot es compatible. Los modelos 208 Allure 2020 en adelante y 2008/3008 con CarPlay de fábrica funcionan perfectamente. La regla: si hoy conectás el celu con cable y funciona CarPlay → el adaptador va a andar. ¿Cuál es tu modelo y año?"
+  },
+
+  // ─── INALÁMBRICO / WIRELESS ────────────────────────────────────────────────
+  {
+    keywords: ["inalambrico", "wireless", "sin cable", "bluetooth", "inalámbrico"],
+    answer: "¡Hola! Exactamente, todos nuestros adaptadores son inalámbricos. Conectan por WiFi + Bluetooth y la reconexión es automática cada vez que subís al auto. No necesitás enchufar nada más. 😊"
+  },
+
+  // ─── PROBLEMAS DE CONEXIÓN / NO FUNCIONA ──────────────────────────────────
+  {
+    keywords: ["no conecta", "no funciona", "problema", "no anda", "tilda", "traba", "congela", "reinicia", "error", "falla"],
+    answer: "¡Hola! Vamos a resolverlo. Probá estos pasos:\n1️⃣ Desenchufá el adaptador del USB del auto y volvé a enchufarlo\n2️⃣ En el celu, desactivá el WiFi y Bluetooth y volvé a activarlos\n3️⃣ Si no mejora, hacé un reseteo del adaptador (botón reset o lo desenchufás 10 segundos)\n4️⃣ Verificá que en tu celu esté activo el acceso a CarPlay/Android Auto\n\nSi el problema persiste, tenemos garantía y te ayudamos a solucionarlo. ¡Escribinos! 😊"
+  },
+
+  // ─── COMPATIBILIDAD GENERAL ────────────────────────────────────────────────
+  {
+    keywords: ["compatible", "compatibilidad", "sirve para", "funciona con", "sirve", "funciona", "anda con", "va con"],
+    answer: "¡Hola! La regla de compatibilidad es simple: tu auto debe tener CarPlay o Android Auto ORIGINAL DE FÁBRICA funcionando con cable USB. Si hoy conectás el celular con el cable y funciona → el adaptador va a funcionar perfectamente. Si el auto no tiene CarPlay/Android Auto de fábrica, ningún adaptador lo va a agregar. ¿En qué auto lo querés usar?"
+  },
+
+  // ─── INSTALACIÓN / USO ─────────────────────────────────────────────────────
+  {
+    keywords: ["instala", "instalacion", "se conecta", "como se usa", "uso", "configurar", "configuracion", "setup", "armar", "poner"],
+    answer: "¡Hola! La instalación es muy fácil, no hace falta ningún técnico:\n1️⃣ Enchufás el adaptador al puerto USB de tu auto\n2️⃣ Lo emparejás con tu celular una sola vez (primera vez ~30 seg)\n3️⃣ ¡Listo! Desde ahí la conexión es automática cada vez que subís\n\nViene con instrucciones en español. ¿Tenés alguna duda puntual?"
+  },
+
+  // ─── CALIDAD / ORIGINAL ────────────────────────────────────────────────────
+  {
+    keywords: ["original", "calidad", "premium", "trucho", "chino", "garantia de calidad", "buena calidad", "marca"],
+    answer: "¡Hola! Son productos importados de calidad, los mismos que se venden en Europa y EE.UU. Tenemos cientos de ventas con excelentes calificaciones. El más vendido (Q1J) lleva más de 400 unidades vendidas. Todos cuentan con garantía oficial y devolución gratis si hay algún problema. 😊"
+  },
+
+  // ─── ENVÍO ─────────────────────────────────────────────────────────────────
+  {
+    keywords: ["envio", "enviar", "llega", "demora", "despacho", "cuando llega", "cuando mandan", "flex", "correo", "andreani"],
+    answer: "¡Hola! Despachamos por Mercado Envíos con Flex (llega el mismo día o al día siguiente en AMBA) o correo según tu zona. Una vez confirmado el pago, preparamos el pedido en el día. ¿Estás en AMBA o en el interior?"
+  },
+
+  // ─── GARANTÍA / DEVOLUCIÓN ─────────────────────────────────────────────────
+  {
+    keywords: ["garantia", "falla", "anda mal", "defecto", "devolucion", "devolver", "cambio", "cambiar"],
+    answer: "¡Hola! Tenés 30 días de devolución gratis sin preguntas a través de MercadoLibre. Si el producto tiene algún defecto o no funciona como esperabas, coordinamos la devolución y el reembolso completo. También te ayudamos a solucionar cualquier problema técnico antes de llegar a ese punto. 😊"
+  },
+
+  // ─── FACTURA ───────────────────────────────────────────────────────────────
+  {
+    keywords: ["factura a", "factura", "responsable inscripto", "iva", "cuit", "monotributo", "empresa"],
+    answer: "¡Hola! Sí, emitimos factura. Si sos responsable inscripto necesitamos tu CUIT y razón social. Si sos consumidor final o monotributista también podemos emitirte comprobante. ¡Avisanos al momento de la compra!"
+  },
+
+  // ─── STOCK / DISPONIBILIDAD ────────────────────────────────────────────────
+  {
+    keywords: ["stock", "disponible", "disponibilidad", "hay", "tienen", "cuantos", "ultimo", "quedan"],
+    answer: "¡Hola! El stock que ves publicado está disponible para entrega inmediata. Si el producto aparece activo en la publicación, tenemos stock. Ante cualquier duda, ¡consultanos!"
   },
 ];
 
-// Respuesta cuando NINGUNA regla matchea.
-// Pone null si preferis que esas preguntas NO se respondan solas y contestarlas vos.
-export const FALLBACK =
-  "¡Hola! ¿Cómo estás? Muchas gracias por tu consulta. En breve te respondemos con todos los detalles. ¡Saludos!";
+export const FALLBACK = "¡Hola! ¿Cómo estás? Muchas gracias por tu consulta. En breve te respondemos con todos los detalles. ¡Saludos! 😊";
 
-// (Opcional) Reglas distintas por publicacion. La clave es el ID del item (ej "MLA123...").
-// Si una pregunta llega de un item que esta aca, se usan estas reglas en vez de REGLAS.
-// Dejalo vacio {} si no lo necesitas.
 export const REGLAS_POR_ITEM = {
-  // "MLA1234567890": [ { keywords: ["stock"], answer: "..." } ],
+
+  // ─── Q1J — CarPlay/Android Auto Premium (USB-A only, sin YouTube/MirrorLink)
+  "MLA1539098673": [
+    {
+      keywords: ["usb c", "usb-c", "tipo c", "tipo-c", "ficha c", "puerto c", "usbc", "conector c", "entrada c"],
+      answer: "¡Hola! Este modelo (CarPlay Premium Q1J) tiene conector USB-A únicamente, no tiene USB-C. Si tu auto tiene puerto USB-C, te recomendamos el Adaptador 4 en 1 que sí tiene USB-C nativo, o el Mini M21 que viene con adaptador USB-C incluido. ¿Querés que te pase el link?"
+    },
+    {
+      keywords: ["youtube", "netflix", "streaming", "ver videos", "mirrorlink", "mirror link", "replicar", "espejo", "airplay", "duplicar"],
+      answer: "¡Hola! Este modelo (Q1J) convierte tu CarPlay/Android Auto a inalámbrico pero no permite ver YouTube, Netflix ni replicar la pantalla del celular. Si eso es lo que buscás, te recomendamos el Adaptador 4 en 1 (Q1AS-4) que sí incluye MirrorLink/Airplay y YouTube desde el celu, o el TBOX que tiene Android propio. ¿Te paso más info?"
+    },
+  ],
+
+  // ─── Q1AS-4 — Adaptador 4 en 1 USB-A/C (YouTube/MirrorLink SÍ, USB-C SÍ)
+  "MLA1696308779": [
+    {
+      keywords: ["usb c", "usb-c", "tipo c", "tipo-c", "ficha c", "puerto c", "usbc", "conector c", "entrada c"],
+      answer: "¡Hola! Sí, este adaptador tiene conector DUAL: USB-A y USB-C nativos. Funciona con cualquier puerto USB de tu auto. ✅"
+    },
+    {
+      keywords: ["youtube", "netflix", "streaming", "ver videos", "ver pelis", "prime video", "disney"],
+      answer: "¡Hola! Sí, este modelo (4 en 1) permite ver YouTube, Netflix y cualquier app del celular en la pantalla de tu auto mediante MirrorLink/Airplay. Necesitás el celular conectado para que funcione. ✅"
+    },
+    {
+      keywords: ["mirrorlink", "mirror link", "replicar", "espejo", "airplay", "duplicar pantalla"],
+      answer: "¡Hola! Sí, este adaptador incluye MirrorLink y Airplay. Podés replicar toda la pantalla del celular en tu auto y ver YouTube, Netflix, etc. ✅"
+    },
+  ],
+
+  // ─── M21 — Mini CarPlay Inalámbrico (USB-A + adaptador C incluido, sin YouTube)
+  "MLA1723808209": [
+    {
+      keywords: ["usb c", "usb-c", "tipo c", "tipo-c", "ficha c", "puerto c", "usbc", "conector c", "entrada c"],
+      answer: "¡Hola! Este modelo (Mini M21) es USB-A pero viene con un adaptador USB-C incluido en la caja, así que funciona también en autos con puerto USB-C. ✅"
+    },
+    {
+      keywords: ["youtube", "netflix", "streaming", "ver videos", "mirrorlink", "mirror link", "replicar", "espejo", "airplay"],
+      answer: "¡Hola! Este modelo (Mini M21) convierte tu CarPlay/Android Auto a inalámbrico pero no permite ver YouTube, Netflix ni replicar pantalla. Para eso te recomendamos el Adaptador 4 en 1 (Q1AS-4) o el TBOX. ¿Querés que te oriente?"
+    },
+    {
+      keywords: ["android", "androide", "version android", "android version"],
+      answer: "¡Hola! Para Android Auto inalámbrico con este modelo necesitás Android 11 o superior en el celular. Para iPhone/CarPlay no hay restricción de versión. ✅"
+    },
+  ],
+
+  // ─── TBOX — Carlinkit TBOX (Android propio 4GB/32GB, YouTube sin celular)
+  "MLA1696375355": [
+    {
+      keywords: ["youtube", "netflix", "streaming", "ver videos", "ver pelis", "prime video", "disney", "sin celular", "independiente", "sin el celu"],
+      answer: "¡Hola! Sí, el TBOX tiene sistema Android propio (4GB RAM / 32GB almacenamiento). Podés instalar YouTube, Netflix, Spotify y cualquier app directamente, sin necesitar el celular conectado. Es el modelo más completo que tenemos. ✅"
+    },
+    {
+      keywords: ["usb c", "usb-c", "tipo c", "tipo-c", "ficha c", "puerto c", "usbc", "conector c", "entrada c"],
+      answer: "¡Hola! El TBOX usa conector USB-A. Si tu auto tiene USB-C, el Adaptador 4 en 1 (Q1AS-4) o el Mini M21 son mejores opciones para vos."
+    },
+    {
+      keywords: ["instalar apps", "descargar apps", "play store", "google play", "aplicaciones"],
+      answer: "¡Hola! Sí, el TBOX tiene Android completo con Play Store. Podés instalar YouTube, Netflix, Spotify, Waze, y cualquier app que uses. Funciona como un mini teléfono Android conectado a la pantalla de tu auto. ✅"
+    },
+  ],
 };
