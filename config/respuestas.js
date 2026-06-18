@@ -11,6 +11,19 @@ export const REGLAS = [
     answer: "¡Hola! Depende del modelo y año. Los Chevrolet con sistema MyLink (Onix, Tracker, Prisma, etc.) NO son compatibles. El Cruze 2017 en adelante con CarPlay/Android Auto de fábrica SÍ es compatible. La regla general: si hoy conectás el celu con cable USB y te funciona CarPlay o Android Auto → el adaptador va a andar. ¿Cuál es tu modelo y año exacto?"
   },
 
+  // ─── AÑO 2015 O ANTERIOR → INCOMPATIBLE ────────────────────────────────────
+  // CarPlay/Android Auto de fábrica no existía en autos 2015 o anteriores.
+  // OJO: "2008" NO se incluye acá porque es un modelo Peugeot, no un año (colisión).
+  // Va antes que las reglas de marca para que el año tenga prioridad.
+  {
+    keywords: [
+      "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2007", "2006", "2005",
+      "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995",
+      "1994", "1993", "1992", "1991", "1990"
+    ],
+    answer: "¡Hola! Si tu auto es modelo 2015 o anterior, lamentablemente no es compatible: CarPlay y Android Auto no existían de fábrica en los autos de esa época, y este dispositivo solo hace inalámbrico el CarPlay/Android Auto que tu auto ya tenga de fábrica (autos 2016 en adelante, aprox.). Si tenés dudas, conectá el celu con cable: si NO levanta CarPlay/Android Auto, el adaptador tampoco va a funcionar. ¿De qué año es tu auto?"
+  },
+
   // ─── USB-C / FICHA C ───────────────────────────────────────────────────────
   {
     keywords: ["usb c", "usb-c", "tipo c", "tipo-c", "ficha c", "puerto c", "usbc", "conector c", "entrada c"],
@@ -29,7 +42,7 @@ export const REGLAS = [
     answer: "¡Hola! Solo algunos modelos permiten replicar pantalla:\n\n• **Adaptador 4 en 1 (Q1AS-4)** → SÍ tiene MirrorLink y Airplay ✅\n• **TBOX** → SÍ, además tiene Android propio para usar sin celular ✅\n• **CarPlay Q1J / Mini M21** → No incluyen MirrorLink ❌\n\n¿Cuál te interesa o en qué auto lo querés usar?"
   },
 
-  // ─── VER EN MOVIMIENTO ─────────────────────────────────────────────────────
+  // ─── VER EN MOVIMIENTO ────────────────────────────────────────────────────
   {
     keywords: ["en movimiento", "mientras manejo", "andando", "manejando", "en marcha", "mientras circulo", "circulando"],
     answer: "¡Hola! Sí, los adaptadores funcionan mientras manejás. CarPlay/Android Auto inalámbrico funciona todo el tiempo, incluyendo GPS, música y Waze/Google Maps mientras circulás. ¿Tenés alguna duda puntual del modelo?"
@@ -68,13 +81,13 @@ export const REGLAS = [
   // ─── TOYOTA ────────────────────────────────────────────────────────────────
   {
     keywords: ["toyota", "corolla", "hilux", "sw4", "yaris", "camry", "rav4", "fortuner", "rush", "prado"],
-    answer: "¡Hola! Toyota es compatible, siempre que el auto tenga CarPlay o Android Auto de fábrica funcionando con cable. Por ejemplo: Corolla XEI, Hilux con sistema multimedia, etc. La regla: si hoy enchufás el celu con USB y funciona CarPlay/Android Auto → el adaptador va a funcionar. ¿Cuál es tu modelo y año?"
+    answer: "¡Hola! Si tu auto tiene CarPlay o Android Auto de fábrica, este dispositivo funciona perfectamente. La forma de corroborarlo es conectar el celular al auto con cable: si levanta CarPlay/Android Auto, estás OK. Importante: este dispositivo hace que la transmisión sea INALÁMBRICA, no hace que el auto tenga CarPlay/Android Auto si no viene de fábrica. Tampoco funciona en estéreos genéricos. ¿Hoy lo conectás con cable y te funciona? 😊"
   },
 
   // ─── PEUGEOT ───────────────────────────────────────────────────────────────
   {
     keywords: ["peugeot", "208", "308", "2008", "3008", "5008", "partner", "expert"],
-    answer: "¡Hola! Peugeot es compatible. Los modelos 208 Allure 2020 en adelante y 2008/3008 con CarPlay de fábrica funcionan perfectamente. La regla: si hoy conectás el celu con cable y funciona CarPlay → el adaptador va a andar. ¿Cuál es tu modelo y año?"
+    answer: "¡Hola! Si tu auto tiene CarPlay o Android Auto de fábrica, este dispositivo funciona perfectamente. La forma de corroborarlo es conectar el celular al auto con cable: si levanta CarPlay/Android Auto, estás OK. Importante: este dispositivo hace que la transmisión sea INALÁMBRICA, no hace que el auto tenga CarPlay/Android Auto si no viene de fábrica. Tampoco funciona en estéreos genéricos. ¿Hoy lo conectás con cable y te funciona? 😊"
   },
 
   // ─── INALÁMBRICO / WIRELESS ────────────────────────────────────────────────
@@ -89,10 +102,35 @@ export const REGLAS = [
     answer: "¡Hola! Vamos a resolverlo. Probá estos pasos:\n1️⃣ Desenchufá el adaptador del USB del auto y volvé a enchufarlo\n2️⃣ En el celu, desactivá el WiFi y Bluetooth y volvé a activarlos\n3️⃣ Si no mejora, hacé un reseteo del adaptador (botón reset o lo desenchufás 10 segundos)\n4️⃣ Verificá que en tu celu esté activo el acceso a CarPlay/Android Auto\n\nSi el problema persiste, tenemos garantía y te ayudamos a solucionarlo. ¡Escribinos! 😊"
   },
 
+  // ─── MARCAS / MODELOS DE AUTO (catch-all compatibilidad) ───────────────────
+  // Los Chevrolet MyLink incompatibles se atajan ANTES (primera regla del array).
+  // Las preguntas de FEATURES (USB-C, YouTube, etc.) se atajan ANTES también.
+  // Cualquier consulta que solo nombre una marca/modelo cae acá con la respuesta canónica.
+  {
+    keywords: [
+      "modelo", "que auto", "qué auto", "mi auto", "para mi auto", "marca", "año", "anio",
+      "volkswagen", "vw", "vento", "golf", "polo", "virtus", "taos", "nivus", "amarok", "tcross", "t-cross", "t cross", "suran", "voyage", "saveiro",
+      "ford", "focus", "ranger", "ecosport", "territory", "kuga", "mondeo", "fiesta", "maverick", "bronco",
+      "renault", "sandero", "logan", "duster", "kangoo", "koleos", "captur", "kwid", "stepway", "oroch", "alaskan", "megane", "kardian",
+      "fiat", "cronos", "argo", "mobi", "toro", "pulse", "fastback", "strada", "palio", "titano",
+      "citroen", "citroën", "c3", "c4", "c5", "berlingo", "aircross", "ds3", "ds4", "ds7", "basalt",
+      "408", "207", "partner",
+      "etios",
+      "nissan", "frontier", "kicks", "versa", "sentra", "march", "x-trail", "xtrail",
+      "jeep", "renegade", "compass", "commander", "wrangler", "cherokee",
+      "honda", "civic", "hrv", "hr-v", "crv", "cr-v", "fit", "wrv", "wr-v",
+      "audi", "bmw", "mercedes", "benz", "clase a", "clase b", "a3", "a4", "a1", "q3", "q5",
+      "hyundai", "kia", "mitsubishi", "l200", "outlander", "asx", "suzuki", "vitara", "swift",
+      "dodge", "ram ", "rampage", "chery", "tiggo", "jac", "jetour", "haval", "byd",
+      "corsa", "montana", "cruze"
+    ],
+    answer: "¡Hola! Si tu auto tiene CarPlay o Android Auto de fábrica, este dispositivo funciona perfectamente. La forma de corroborarlo es conectar el celular al auto con cable: si levanta CarPlay/Android Auto, estás OK. Importante: este dispositivo hace que la transmisión sea INALÁMBRICA, no hace que el auto tenga CarPlay/Android Auto si no viene de fábrica. Tampoco funciona en estéreos genéricos. ¿Hoy lo conectás con cable y te funciona? 😊"
+  },
+
   // ─── COMPATIBILIDAD GENERAL ────────────────────────────────────────────────
   {
-    keywords: ["compatible", "compatibilidad", "sirve para", "funciona con", "sirve", "funciona", "anda con", "va con"],
-    answer: "¡Hola! La regla de compatibilidad es simple: tu auto debe tener CarPlay o Android Auto ORIGINAL DE FÁBRICA funcionando con cable USB. Si hoy conectás el celular con el cable y funciona → el adaptador va a funcionar perfectamente. Si el auto no tiene CarPlay/Android Auto de fábrica, ningún adaptador lo va a agregar. ¿En qué auto lo querés usar?"
+    keywords: ["compatible", "compatibilidad", "sirve para", "funciona con", "sirve", "funciona", "anda con", "va con", "anda en", "sirve en", "funciona en", "andará", "andaria", "le anda"],
+    answer: "¡Hola! Si tu auto tiene CarPlay o Android Auto de fábrica, este dispositivo funciona perfectamente. La forma de corroborarlo es conectar el celular al auto con cable: si levanta CarPlay/Android Auto, estás OK. Importante: este dispositivo hace que la transmisión sea INALÁMBRICA, no hace que el auto tenga CarPlay/Android Auto si no viene de fábrica. Tampoco funciona en estéreos genéricos. ¿Hoy lo conectás con cable y te funciona? 😊"
   },
 
   // ─── INSTALACIÓN / USO ─────────────────────────────────────────────────────
@@ -101,7 +139,7 @@ export const REGLAS = [
     answer: "¡Hola! La instalación es muy fácil, no hace falta ningún técnico:\n1️⃣ Enchufás el adaptador al puerto USB de tu auto\n2️⃣ Lo emparejás con tu celular una sola vez (primera vez ~30 seg)\n3️⃣ ¡Listo! Desde ahí la conexión es automática cada vez que subís\n\nViene con instrucciones en español. ¿Tenés alguna duda puntual?"
   },
 
-  // ─── CALIDAD / ORIGINAL ────────────────────────────────────────────────────
+  // ─── CALIDAD / ORIGINAL ────────────────────────────────────────────────
   {
     keywords: ["original", "calidad", "premium", "trucho", "chino", "garantia de calidad", "buena calidad", "marca"],
     answer: "¡Hola! Son productos importados de calidad, los mismos que se venden en Europa y EE.UU. Tenemos cientos de ventas con excelentes calificaciones. El más vendido (Q1J) lleva más de 400 unidades vendidas. Todos cuentan con garantía oficial y devolución gratis si hay algún problema. 😊"
@@ -125,7 +163,7 @@ export const REGLAS = [
     answer: "¡Hola! Sí, emitimos factura. Si sos responsable inscripto necesitamos tu CUIT y razón social. Si sos consumidor final o monotributista también podemos emitirte comprobante. ¡Avisanos al momento de la compra!"
   },
 
-  // ─── STOCK / DISPONIBILIDAD ────────────────────────────────────────────────
+  // ─── STOCK / DISPONIBILIDAD ───────────────────────────────────────────────
   {
     keywords: ["stock", "disponible", "disponibilidad", "hay", "tienen", "cuantos", "ultimo", "quedan"],
     answer: "¡Hola! El stock que ves publicado está disponible para entrega inmediata. Si el producto aparece activo en la publicación, tenemos stock. Ante cualquier duda, ¡consultanos!"
